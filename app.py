@@ -59,7 +59,8 @@ if submit:
         "MTRANS": mtrans
     }
 
-    url = "http://localhost:8000/predict"
+    # Ganti URL ini dengan URL deployment FastAPI kamu di Railway atau platform lain
+    url = "https://giving-curiosity.up.railway.app/predict"
 
     try:
         response = requests.post(url, json=input_data)
