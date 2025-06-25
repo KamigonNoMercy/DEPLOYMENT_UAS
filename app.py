@@ -59,8 +59,7 @@ if submit:
         "MTRANS": mtrans
     }
 
-    # Ganti URL ini dengan URL deployment FastAPI kamu di Railway atau platform lain
-    url = "https://giving-curiosity.up.railway.app/predict"
+    url = "https://deploymentuas-production.up.railway.app/predict"
 
     try:
         response = requests.post(url, json=input_data)
