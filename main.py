@@ -2,6 +2,8 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 import pickle
 import pandas as pd
+import os
+import uvicorn
 
 with open("best_model_pipeline.pkl", "rb") as f:
     model = pickle.load(f)
@@ -44,7 +46,6 @@ def predict(data: ObesityFeatures):
     proba = model.predict_proba(input_df)[0]
     classes = model.classes_.tolist()
 
-    # Ambil feature importance jika model ada atribut ini
     if hasattr(model.named_steps['classifier'], 'feature_importances_'):
         importances = model.named_steps['classifier'].feature_importances_
         importance_dict = dict(zip(feature_names, importances))
@@ -56,3 +57,7 @@ def predict(data: ObesityFeatures):
         "probabilities": dict(zip(classes, proba)),
         "feature_importances": importance_dict
     }
+
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 8000))
+    uvicorn.run("main:app", host="0.0.0.0", port=port)
